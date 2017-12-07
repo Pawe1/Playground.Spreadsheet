@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using PC.Spreadsheet;
  
-namespace Spreadsheet.Tests
+namespace PC.Spreadsheet.Tests
 {
     [TestFixture]
     public class SpreadsheetTestFixture
@@ -13,7 +14,8 @@ namespace Spreadsheet.Tests
         [Test]
         public void Dummy()
         {
-            Assert.That(true);
+            Spreadsheet sut = new Spreadsheet();
+            Assert.That(sut.ToString().Length > 0);
         }
     }
 }

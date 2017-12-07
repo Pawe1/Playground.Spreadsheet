@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spreadsheet
+namespace PC.Spreadsheet
 {
-    class Class1
+    public class Spreadsheet
     {
+        public void print()
+        {
+            
+        }
     }
 }
