@@ -12,31 +12,35 @@ namespace PC.Spreadsheet.Tests
     public class SpreadsheetTestFixture
     {
         [Test]
-        public void SimpleInput1()
+        public void Simple_Input_1()
         {
-            //     private readonly string[] lines = { " 1 | 3 | 45 | 3.4 |", " 2 | 2 | -213 | 12;" };
+         //   private readonly string[] lines = { @" 1 | 3 | 45 | 3.4 |", @" 2 | 2 | -213 | 12;" };
             //Environment.NewLine
 
             Spreadsheet sut = new Spreadsheet();
-            Assert.That(sut.ToString().Length > 0);
+            Assert.DoesNotThrow(() => {
+                sut.loadLine(0, " 1 | 3 | 45 | 3.4 |");  sut.loadLine(1, " 2 | 2 | -213 | 12;");
+            });
         }
 
         [Test]
-        public void SimpleInput2()
+        public void Simple_Input_2()
         {
             // private readonly string[] lines = { " 1 | 3 | 45 |", " A1 + A2 + 4 | 1 | B1 + 3;" };
 
             Spreadsheet sut = new Spreadsheet();
-            Assert.That(sut.ToString().Length > 0);
+            Assert.DoesNotThrow(() => {
+                sut.loadLine(0, " 1 | 3 | 45 |");  sut.loadLine(1, " A1 + A2 + 4 | 1 | B1 + 3;");
+            });
         }
 
-        [Test]
+       /* [Test]
         public void Expression()
         {
             // private readonly string expression = { ""A1+A3* B2"" };
 
             Spreadsheet sut = new Spreadsheet();
             Assert.That(sut.ToString().Length > 0);
-        }
+        }*/
     }
 }
