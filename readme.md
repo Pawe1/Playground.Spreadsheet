@@ -2,7 +2,8 @@
 
 ## Limitations / assumptions / etc
 
-* system decimal separator is `,`
-* tokens have to be separated by spaces
+* as simple and bare-bone as possible (no 3rd parity references)
+* system decimal separator have to be `,`
+* *all tokens must be separated by spaces*
 * constant spreadsheet size (256 x 256)
-* cell references can have only 1 letter
+* cell references can contain only 1 letter

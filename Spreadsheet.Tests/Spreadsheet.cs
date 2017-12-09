@@ -14,33 +14,37 @@ namespace PC.Spreadsheet.Tests
         [Test]
         public void Simple_Input_1()
         {
-         //   private readonly string[] lines = { @" 1 | 3 | 45 | 3.4 |", @" 2 | 2 | -213 | 12;" };
-            //Environment.NewLine
+             string[] lines = {
+                " 1 | 3 | 45 | 3.4 |",
+                " 2 | 2 | -213 | 12;" };
 
             Spreadsheet sut = new Spreadsheet();
-            Assert.DoesNotThrow(() => {
-                sut.loadLine(0, " 1 | 3 | 45 | 3.4 |");  sut.loadLine(1, " 2 | 2 | -213 | 12;");
-            });
+            Assert.DoesNotThrow(() => { sut.load(lines); });
         }
 
         [Test]
         public void Simple_Input_2()
         {
-            // private readonly string[] lines = { " 1 | 3 | 45 |", " A1 + A2 + 4 | 1 | B1 + 3;" };
+             string[] lines = {
+                " 1 | 3 | 45 |",
+                " A1 + A2 + 4 | 1 | B1 + 3;" };
 
             Spreadsheet sut = new Spreadsheet();
-            Assert.DoesNotThrow(() => {
-                sut.loadLine(0, " 1 | 3 | 45 |");  sut.loadLine(1, " A1 + A2 + 4 | 1 | B1 + 3;");
-            });
+            Assert.DoesNotThrow(() => { sut.load(lines); });
         }
-
-       /* [Test]
-        public void Expression()
+        
+        [Test]
+        public void References()
         {
-            // private readonly string expression = { ""A1+A3* B2"" };
+             string[] lines = {
+                " 1 | 2 | 3 |",
+                " 4 | 5 | 6 |",
+                " A1 + A3 * B2;"
+            };
 
             Spreadsheet sut = new Spreadsheet();
-            Assert.That(sut.ToString().Length > 0);
-        }*/
+            sut.load(lines);
+            Assert.That(sut.cells[0, 2].Value == 16);
+        }
     }
 }

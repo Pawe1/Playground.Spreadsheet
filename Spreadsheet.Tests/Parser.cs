@@ -42,7 +42,7 @@ namespace PC.Spreadsheet.Tests
         [Test]
         public void Parenthesis()
         {
-            double result = Parser.Evaluate("( 1 +  2 ) * 3");
+            double result = Parser.Evaluate("( 1 + 2 ) * 3");
             Assert.That(result == 9);
         }
 
