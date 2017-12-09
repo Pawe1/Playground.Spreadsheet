@@ -10,8 +10,6 @@ namespace PC.Spreadsheet
 {
     public static class Parser
     {
-
-
         static Dictionary<string, Tuple<byte, BinaryFunction>> functions =  new Dictionary<string, Tuple<byte, BinaryFunction>>()
         {
             { "+", new Tuple<byte, BinaryFunction>( 1, (x, y) => x + y ) },
@@ -46,11 +44,6 @@ namespace PC.Spreadsheet
             if (operator1priority > operator2priority) return 1;
             if (operator1priority < operator2priority) return -1;
             return 0;
-        }
-
-        private static string[] tokenize(string input)
-        {
-            return input.Split(' ');
         }
         
         private static IEnumerable<string> infixNotationToPostfixNotation(string[] tokens)   // Shunting-yard algorithm
@@ -95,7 +88,7 @@ namespace PC.Spreadsheet
 
         public static double Evaluate(string x)
         {
-            string[] tokens = tokenize(x);
+            string[] tokens = Tokenizer.execute(x);
             IEnumerable<string> rpn = infixNotationToPostfixNotation(tokens);
 
             Stack<string> stack = new Stack<string>();

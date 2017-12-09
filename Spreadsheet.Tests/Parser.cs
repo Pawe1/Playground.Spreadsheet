@@ -25,6 +25,7 @@ namespace PC.Spreadsheet.Tests
         [TestCase("-1 + 2", 1)]
         [TestCase("0,1 + 0,2", 0.3)]
         [TestCase("-0,1 / 0,01", -10)]
+        [TestCase("  1 +    6 ", 7)]
         public void Simple_parsing(string expression, double expectedResult)
         {
             double result = Parser.Evaluate(expression);
@@ -41,8 +42,8 @@ namespace PC.Spreadsheet.Tests
         [Test]
         public void Parenthesis()
         {
-            double result = Parser.Evaluate("1 + ( 2 * 3 )");
-            Assert.That(result == 7);
+            double result = Parser.Evaluate("( 1 +  2 ) * 3");
+            Assert.That(result == 9);
         }
 
         [Test]

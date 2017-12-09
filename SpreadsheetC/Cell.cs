@@ -12,7 +12,7 @@ namespace PC.Spreadsheet
         private string _formula;
         //private double? _value;
 
-        public string Formula { get { return _formula; } set { _formula = value.Trim().ToUpper()/*.Replace(" ", "")*/;  eval(); } }
+        public string Formula { get { return _formula; } set { _formula = value.Trim().ToUpper().Replace("  ", " ");  eval(); } }
         public double? Value { get; set; }
 
         public bool HasReferences()

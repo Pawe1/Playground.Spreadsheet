@@ -19,7 +19,7 @@ namespace PC.Spreadsheet.Tests
             Assert.That(sut.HasReferences() == shouldDetectReference);
         }
 
-        [TestCase(" 1+   2", true)]
+        [TestCase(" 1 +   2", true)]
         [TestCase("   A2 ", false)]
         public void Check_expression(string formula, bool shouldDetectExpression)
         {
