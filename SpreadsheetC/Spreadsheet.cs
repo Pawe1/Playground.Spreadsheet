@@ -18,7 +18,7 @@ namespace PC.Spreadsheet
         public static char terminator = ';';
 
         Cell[,] _cells = new Cell[256, 256];        
-        public Cell[,] cells { get; set; }       
+        public Cell[,] cells { get { return _cells; } }  
 
         private void ClearRow(int index)
         {
@@ -27,7 +27,7 @@ namespace PC.Spreadsheet
                 throw new Exception("Index out of range");
             }
             for (int LC = 0; LC < _cells.GetLength(0) ; LC++)
-                _cells[index, LC].clear();
+                _cells[LC, index].Clear();
         }
 
         private void Clear()
@@ -38,9 +38,9 @@ namespace PC.Spreadsheet
 
         public void LoadLine(int index, string line)
         {
-            const char _cellSeparator = '|';
+            const char cellSeparator = '|';
 
-            if (line.Split(_cellSeparator).Length > _cells.GetLength(0))
+            if (line.Split(cellSeparator).Length > _cells.GetLength(0))
             {
                 throw new Exception("Too long line");
             }
@@ -51,14 +51,12 @@ namespace PC.Spreadsheet
 
             ClearRow(index);
 
-            string[] formulas = line.Replace(terminator.ToString(), "").Split(_cellSeparator).ToArray();
-               
-//                .ForEach(item => ); .foreach()
+           /* List<string>*/ string[] formulas = line.Replace(terminator.ToString(), "").Split(cellSeparator); //.ToList() ; //.ToArray();
 
-            for(int LC = 0; LC < Math.Min(formulas.GetLength(0), _cells.GetLength(0)); LC++)
+            for(int LC = 0; LC < Math.Min(formulas.Count(), _cells.GetLength(0)); LC++)
             { 
-                _cells[index, LC].Formula = formulas[LC];
-                evaluateCellValue(index, LC);
+                _cells[LC, index].formula = formulas[LC];
+                evaluateCellValue(LC, index);
             }
 
         }
@@ -82,53 +80,46 @@ namespace PC.Spreadsheet
         private void evaluateCellValue(int x, int y)
         {
             Cell cell = _cells[x, y];
-            if (cell.Formula.Length > 0)
+            string formula = cell.formula;
+
+            if (formula.Length == 0)
             {
-                if (Classifier.containsReferences(cell.Formula))
+                cell.value = null;
+            }
+            else
+            {
+                if (Classifier.ContainsReferences(formula))
                 {
-                    var zzz = Classifier.classiffy(cell.Formula);
-
-
-                //    IEnumerable<string> references = cell.extractReferences();
-                  /*  var translatedReferences = references.Select( r => referenceToCoordinates(r) );
-
-                    translatedReferences*/
-
-
-                    
-                    cell.Value = null;
-                    return;
+                    formula = ReferenceResolver.Resolve(formula, (coordinates) => _cells[coordinates.x, coordinates.y].formula );
                 }
-
-                if (Classifier.isExpression(cell.Formula))
+                if (Classifier.ContainsReferences(formula))
+                {
+                    cell.value = null;
+                }
+                else if (Classifier.IsExpression(formula))
                 {
                     try
                     {
-                        cell.Value = Parser.Evaluate(cell.Formula);
+                        cell.value = MathParser.Evaluate(formula);
                     }
                     catch
                     {
-                        cell.Value = null;
+                        cell.value = null;
                     }                    
                 }
                 else   // do we need this?...
                 {
-                    cell.Value = double.Parse(cell.Formula.Replace(".", ","));
+                    cell.value = double.Parse(formula.Replace(".", ","));
                 }
             }
-            else
-            {
-                cell.Value = null;
-            }
-
              _cells[x, y] = cell;
         }
 
         private void evaluateCells()
         {
-            for (int x = 0; x < _cells.GetLength(0); x++)
+            for (int y = 0; y < _cells.GetLength(0); y++)
             {
-                for (int y = 0; y < _cells.GetLength(1); y++)
+                for (int x = 0; x < _cells.GetLength(1); x++)
                 { 
                     evaluateCellValue(x, y);
                 }
@@ -137,24 +128,24 @@ namespace PC.Spreadsheet
 
         public void print()
         {
-            for (int x = 0; x < 5/*_cells.GetLength(0)*/; x++)
+            for (int y = 0; y < 5/*_cells.GetLength(0)*/; y++)
             {
                 Console.WriteLine();
-                for (int y = 0; y < 5 /*_cells.GetLength(1)*/; y++)
+                for (int x = 0; x < 5 /*_cells.GetLength(1)*/; x++)
                 { 
-                    string value = (_cells[x, y].Value??default(int)).ToString();                       
+                    string value = (_cells[x, y].value??default(int)).ToString();                       
                     Console.Write(String.Format("[{0, 12}] ", value));
                 }
             }
 
             Console.WriteLine();
 
-            for (int x = 0; x < 5/*_cells.GetLength(0)*/; x++)
+            for (int y = 0; y < 5/*_cells.GetLength(0)*/; y++)
             {
                 Console.WriteLine();
-                for (int y = 0; y < 5 /*_cells.GetLength(1)*/; y++)
+                for (int x = 0; x < 5 /*_cells.GetLength(1)*/; x++)
                 { 
-                    string value = _cells[x, y].Formula;                       
+                    string value = _cells[x, y].formula;                       
                     Console.Write(String.Format("[{0, 12}] ", value));
                 }
             }

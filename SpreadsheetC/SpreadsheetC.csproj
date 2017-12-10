@@ -62,7 +62,7 @@
     <Compile Include="ReferenceResolver.cs" />
     <Compile Include="Classifier.cs" />
     <Compile Include="Tokenizer.cs" />
-    <Compile Include="Parser.cs" />
+    <Compile Include="MathParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
