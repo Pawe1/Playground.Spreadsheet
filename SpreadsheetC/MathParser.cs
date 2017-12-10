@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using BinaryFunction = System.Func<double, double, double>;  
 
 namespace PC.Spreadsheet
 {
-    public static class Parser
+    public static class MathParser
     {
         static Dictionary<string, Tuple<byte, BinaryFunction>> functions =  new Dictionary<string, Tuple<byte, BinaryFunction>>()
         {
@@ -18,12 +16,18 @@ namespace PC.Spreadsheet
             { "/", new Tuple<byte, BinaryFunction>( 2, (x, y) => x / y ) }
         };
 
-        static bool isOperator(string x)
+        static bool IsOperator(string s)
         {
-            return functions.ContainsKey(x);
+            return functions.ContainsKey(s);
         }
 
-        static byte opreratorPriority(string operatorr)
+        static bool IsValidNumber(string s)
+        {
+            double tmp;
+            return double.TryParse(s, out tmp);
+        }
+
+        static byte OpreratorPriority(string operatorr)
         {
             if (operatorr.Equals("(") || operatorr.Equals(")"))
             {
@@ -37,24 +41,23 @@ namespace PC.Spreadsheet
                 throw new Exception("Unknown operator");
         }
 
-        static int precedence(string operator1, string operator2)
+        static int Precedence(string operator1, string operator2)
         {
-            byte operator1priority = opreratorPriority(operator1);
-            byte operator2priority = opreratorPriority(operator2);
+            byte operator1priority = OpreratorPriority(operator1);
+            byte operator2priority = OpreratorPriority(operator2);
             if (operator1priority > operator2priority) return 1;
             if (operator1priority < operator2priority) return -1;
             return 0;
         }
         
-        private static IEnumerable<string> infixNotationToPostfixNotation(IEnumerable<string> tokens)   // Shunting-yard algorithm
+        static IEnumerable<string> InfixNotationToPostfixNotation(IEnumerable<string> tokens)   // Shunting-yard algorithm
         {
             Stack<string> operators = new Stack<string>();
-            List<string> output = new List<string>();
-            double n;
+            List<string> output = new List<string>();            
 
             foreach (string token in tokens)
             {
-                if (double.TryParse(token, out n))
+                if (IsValidNumber(token))
                 {
                     output.Add(token);
                 }
@@ -70,9 +73,9 @@ namespace PC.Spreadsheet
                     }
                     operators.Pop();
                 }
-                if (isOperator(token))
+                if (IsOperator(token))
                 {
-                    while (operators.Count != 0 && (precedence(operators.Peek(), token) > -1)) 
+                    while (operators.Count != 0 && (Precedence(operators.Peek(), token) > -1)) 
                     {
                         output.Add(operators.Pop());
                     }
@@ -86,19 +89,17 @@ namespace PC.Spreadsheet
             return output;
         }
 
-        public static double Evaluate(string x)
+        public static double Evaluate(string s)
         {
-            IEnumerable<string> tokens = Tokenizer.execute(x);
-
-
-            IEnumerable<string> rpn = infixNotationToPostfixNotation(tokens.ToArray());
+            IEnumerable<string> tokens = Tokenizer.Execute(s);
+            IEnumerable<string> tokensInRPN = InfixNotationToPostfixNotation(tokens.ToArray());
 
             Stack<string> stack = new Stack<string>();
             double operand1;
             double operand2;
-            foreach (string token in rpn)
+            foreach (string token in tokensInRPN)
             {
-                if (isOperator(token))
+                if (IsOperator(token))
                 {
                     operand2 = double.Parse(stack.Pop());
                     operand1 = double.Parse(stack.Pop());

@@ -3,18 +3,18 @@
     public struct Cell
     {
         private string _formula;
-        public string Formula { get { return _formula; } set { setFormula(value); } }
-        public double? Value { get; set; }
+        public string formula { get { return _formula; } set { SetFormula(value); } }
+        public double? value { get; set; }
 
-        private void setFormula(string value)
+        private void SetFormula(string value)
         {
-            _formula = value.Trim().ToUpper().Replace("  ", " ");
+            _formula = value.Trim().ToUpper().Replace("  ", " ");   // auto-sanitization
         }
 
-        public void clear()
+        public void Clear()
         {
             _formula = "";
-            Value = null;
+            value = null;
         }      
     }
 }
