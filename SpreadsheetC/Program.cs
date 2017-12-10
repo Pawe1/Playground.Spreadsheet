@@ -8,15 +8,36 @@ namespace PC.Spreadsheet
 {
     class Program
     {
-        static void Main(string[] args)
+        static void LoadFromConsole(Spreadsheet spreadsheet)
         {
-            Spreadsheet s = new Spreadsheet();
-            s.loadLine(0, " 1 | 3 | 45 | 3.4 |");
-            s.loadLine(1, " 2 | 2 | -213 | 12;");
-            s.loadLine(2, " 1 | 3 | 45 |");
-            s.loadLine(3, " A1 + A2 + 4 | 1 | B1 + 3;");
-            s.print();
-            Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Enter data:   [|] = cell separator   [;] = end of data   [Enter] = next line");
+            Console.ResetColor();
+            string line;
+            byte lineId = 0;
+            do
+            {
+                line = Console.ReadLine();
+                spreadsheet.loadLine(lineId++, line);
+            } while (!line.Contains(";"));
+            Console.Clear();
+        }
+
+        static void Main(string[] args)
+        {   
+            Spreadsheet spreadsheet = new Spreadsheet();
+            //LoadFromConsole(spreadsheet);
+                  
+            spreadsheet.loadLine(0, " 1 | 3 | 45 | 3.4 |");
+            spreadsheet.loadLine(1, " 2 | 2 | -213 | 12;");
+            spreadsheet.loadLine(2, " 1 | 3 | 45 |");
+            spreadsheet.loadLine(3, " A1 + A2 + 4 | 1 | B1 + 3;");
+
+            spreadsheet.print();
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to quit...");
+            Console.ReadKey();
         }
     }
 }
