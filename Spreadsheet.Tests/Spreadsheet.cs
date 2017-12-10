@@ -19,7 +19,14 @@ namespace PC.Spreadsheet.Tests
                 " 2 | 2 | -213 | 12;" };
 
             Spreadsheet sut = new Spreadsheet();
-            Assert.DoesNotThrow(() => { sut.load(lines); });
+            Assert.That(sut.cells[0, 0].Value == 1);
+            Assert.That(sut.cells[1, 0].Value == 3);
+            Assert.That(sut.cells[2, 0].Value == 45);
+            Assert.That(sut.cells[3, 0].Value == 3.4);
+            Assert.That(sut.cells[0, 1].Value == 2);
+            Assert.That(sut.cells[1, 1].Value == 2);
+            Assert.That(sut.cells[2, 1].Value == -213);
+            Assert.That(sut.cells[3, 1].Value == 12);
         }
 
         [Test]
@@ -30,7 +37,12 @@ namespace PC.Spreadsheet.Tests
                 " A1 + A2 + 4 | 1 | B1 + 3;" };
 
             Spreadsheet sut = new Spreadsheet();
-            Assert.DoesNotThrow(() => { sut.load(lines); });
+            Assert.That(sut.cells[0, 0].Value == 1);
+            Assert.That(sut.cells[1, 0].Value == 3);
+            Assert.That(sut.cells[2, 0].Value == 45);
+            Assert.That(sut.cells[0, 1].Value == 8);
+            Assert.That(sut.cells[1, 1].Value == 1);
+            Assert.That(sut.cells[2, 1].Value == 11);
         }
         
         [Test]
@@ -43,7 +55,7 @@ namespace PC.Spreadsheet.Tests
             };
 
             Spreadsheet sut = new Spreadsheet();
-            sut.load(lines);
+            sut.Load(lines);
             Assert.That(sut.cells[0, 2].Value == 16);
         }
     }

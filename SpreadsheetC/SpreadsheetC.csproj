@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cell.cs" />
+    <Compile Include="ReferenceResolver.cs" />
+    <Compile Include="Classifier.cs" />
     <Compile Include="Tokenizer.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Program.cs" />

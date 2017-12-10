@@ -46,7 +46,7 @@ namespace PC.Spreadsheet
             return 0;
         }
         
-        private static IEnumerable<string> infixNotationToPostfixNotation(string[] tokens)   // Shunting-yard algorithm
+        private static IEnumerable<string> infixNotationToPostfixNotation(IEnumerable<string> tokens)   // Shunting-yard algorithm
         {
             Stack<string> operators = new Stack<string>();
             List<string> output = new List<string>();
@@ -88,8 +88,10 @@ namespace PC.Spreadsheet
 
         public static double Evaluate(string x)
         {
-            string[] tokens = Tokenizer.execute(x);
-            IEnumerable<string> rpn = infixNotationToPostfixNotation(tokens);
+            IEnumerable<string> tokens = Tokenizer.execute(x);
+
+
+            IEnumerable<string> rpn = infixNotationToPostfixNotation(tokens.ToArray());
 
             Stack<string> stack = new Stack<string>();
             double operand1;

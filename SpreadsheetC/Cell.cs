@@ -1,46 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace PC.Spreadsheet
+﻿namespace PC.Spreadsheet
 {
     public struct Cell
     {
         private string _formula;
-        //private double? _value;
-
-        public string Formula { get { return _formula; } set { _formula = value.Trim().ToUpper().Replace("  ", " ");  eval(); } }
+        public string Formula { get { return _formula; } set { setFormula(value); } }
         public double? Value { get; set; }
 
-        public bool HasReferences()
+        private void setFormula(string value)
         {
-            Regex regex = new Regex(@"[A-Z][0-9]");
-            return regex.Match(_formula).Success;
+            _formula = value.Trim().ToUpper().Replace("  ", " ");
         }
 
-        public bool IsExpression()
-        {
-            Regex regex = new Regex(@".[+\-*\/]" );
-            return regex.Match(_formula).Success;
-        }
-
-        public void Clear()
+        public void clear()
         {
             _formula = "";
             Value = null;
-        }
-
-        private void eval()
-        {
-            if (!IsExpression() && !HasReferences() && _formula.Length > 0)
-            {
-                Value = double.Parse(_formula.Replace(".", ","));
-            }
-            else
-                Value = null;
-        }        
+        }      
     }
 }

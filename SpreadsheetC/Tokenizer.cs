@@ -8,9 +8,9 @@ namespace PC.Spreadsheet
 {
     static class Tokenizer
     {
-        public static string[] execute(string expression)
+        public static IEnumerable<string> execute(string expression)
         {
-            return expression.Split(' ');
+            return expression.Split(' ').ToList();
         }
     }   
 }
