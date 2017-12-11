@@ -1,8 +1,10 @@
 # Simple spreadsheet-like... uhm... thing
 
-As rough, as simple and bare-bone as possible.
-No IOC. No webservices and no cloud hosted backend.
-Also no GUI and (almost) no trace of 3rd parity references.
+*As rough, as simple and bare-bone as possible.*
+
+*No IOC. No webservices and no cloud hosted backend.*
+
+*[Also no GUI and (almost) no trace of 3rd parity references.]*
 
 **Totally pure experience.**
 
@@ -13,7 +15,7 @@ Also no GUI and (almost) no trace of 3rd parity references.
 * constant spreadsheet size (256 x 256)
 * cell references can contain only 1 letter
 * ***Thou shalt not make circular references!***
-* Supplor only for absolute cell references
+* Support only for absolute cell references
 * Excel-like cell addressing
 
 |   | A  | B  |

@@ -22,20 +22,6 @@ namespace PC.Spreadsheet
             return new coordinates { x = (byte)ix, y = (byte)iy };
         }
 
-          /*      public IEnumerable<string> extractReferences()
-        {
-            List<string> result = new List<string>();
-
-            Regex regex = new Regex(@"[A-Z][0-9]");
-            var match = regex.Match(_formula);
-            if (match.Success)
-            {
-                result.AddRange(regex.Matches(_formula).Cast<Match>()
-                    .Select(match_ => match_.Value));
-            }
-            return result;
-        }*/
-
         public static string Resolve(string formula, Func<coordinates, string> lookupFunction)
         {
             var tokens = Classifier.Classiffy(formula);

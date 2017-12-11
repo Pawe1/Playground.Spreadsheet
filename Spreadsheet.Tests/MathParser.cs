@@ -20,6 +20,9 @@ namespace PC.Spreadsheet.Tests
 
         [TestCase("1 + 2", 3)]
         [TestCase("1 - 2", -1)]
+
+      //  [TestCase(["1 + 2", 3], TestName = "xxx")]
+
         [TestCase("2 * 2", 4)]
         [TestCase("3 / 4", 0.75)]
         [TestCase("-1 + 2", 1)]

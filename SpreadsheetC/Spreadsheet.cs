@@ -51,7 +51,7 @@ namespace PC.Spreadsheet
 
             ClearRow(index);
 
-           /* List<string>*/ string[] formulas = line.Replace(terminator.ToString(), "").Split(cellSeparator); //.ToList() ; //.ToArray();
+            string[] formulas = line.Replace(terminator.ToString(), "").Split(cellSeparator); 
 
             for(int LC = 0; LC < Math.Min(formulas.Count(), _cells.GetLength(0)); LC++)
             { 
@@ -128,10 +128,10 @@ namespace PC.Spreadsheet
 
         public void print()
         {
-            for (int y = 0; y < 5/*_cells.GetLength(0)*/; y++)
+            for (int y = 0; y < 5; y++)
             {
                 Console.WriteLine();
-                for (int x = 0; x < 5 /*_cells.GetLength(1)*/; x++)
+                for (int x = 0; x < 5; x++)
                 { 
                     string value = (_cells[x, y].value??default(int)).ToString();                       
                     Console.Write(String.Format("[{0, 12}] ", value));
@@ -140,10 +140,10 @@ namespace PC.Spreadsheet
 
             Console.WriteLine();
 
-            for (int y = 0; y < 5/*_cells.GetLength(0)*/; y++)
+            for (int y = 0; y < 5; y++)
             {
                 Console.WriteLine();
-                for (int x = 0; x < 5 /*_cells.GetLength(1)*/; x++)
+                for (int x = 0; x < 5; x++)
                 { 
                     string value = _cells[x, y].formula;                       
                     Console.Write(String.Format("[{0, 12}] ", value));

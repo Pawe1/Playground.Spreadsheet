@@ -26,12 +26,13 @@ namespace PC.Spreadsheet
         static void Main(string[] args)
         {   
             Spreadsheet spreadsheet = new Spreadsheet();
-            //LoadFromConsole(spreadsheet);
+
+            LoadFromConsole(spreadsheet);
                   
-            spreadsheet.LoadLine(0, " 1 | 3 | 45 | 3.4 |");
+            /*spreadsheet.LoadLine(0, " 1 | 3 | 45 | 3.4 |");
             spreadsheet.LoadLine(1, " 2 | 2 | -213 | 12;");
             spreadsheet.LoadLine(2, " 1 | 3 | 45 |");
-            spreadsheet.LoadLine(3, " A1 + A2 + 4 | 1 | B1 + 3;");
+            spreadsheet.LoadLine(3, " A1 + A2 + 4 | 1 | B1 + 3;");*/
 
             spreadsheet.print();
 
