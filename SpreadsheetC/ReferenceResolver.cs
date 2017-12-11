@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PC.Spreadsheet
 {
@@ -39,9 +36,31 @@ namespace PC.Spreadsheet
             return result;
         }*/
 
-        static string Resolve(string formula, Func<coordinates, string> lookupFunction)
+        public static string Resolve(string formula, Func<coordinates, string> lookupFunction)
         {
-            throw new NotImplementedException();
+            var tokens = Classifier.Classiffy(formula);
+
+            var processedTokens = tokens.Select(
+                t =>
+                {
+                    if (t.isReference)
+                    {
+                        var coordinates = referenceToCoordinates(t.value);
+                        var solved_value = lookupFunction(coordinates);                    
+                   //     if (!Classifier.ContainsReferences(solved_value))
+                        {
+                            return solved_value;
+                        }
+                       // return t.value;
+                    }
+                    else
+                    {
+                      return t.value;
+                    }
+                 }
+
+                ).ToArray();
+            return String.Join(" ", processedTokens);
         }
     }
 }

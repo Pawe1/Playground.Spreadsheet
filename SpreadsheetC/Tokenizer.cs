@@ -8,7 +8,7 @@ namespace PC.Spreadsheet
 {
     static class Tokenizer
     {
-        public static IEnumerable<string> execute(string expression)
+        public static IEnumerable<string> Execute(string expression)
         {
             return expression.Split(' ').ToList();
         }

@@ -14,7 +14,7 @@ namespace PC.Spreadsheet.Tests
         public void Parser_Input()
         {
             Assert.DoesNotThrow(() => {
-                Parser.Evaluate("-4 + ( 11 - ( 3 * 2 ) ) / 2");
+                MathParser.Evaluate("-4 + ( 11 - ( 3 * 2 ) ) / 2");
             });
         }
 
@@ -28,28 +28,28 @@ namespace PC.Spreadsheet.Tests
         [TestCase("  1 +    6 ", 7)]
         public void Simple_parsing(string expression, double expectedResult)
         {
-            double result = Parser.Evaluate(expression);
+            double result = MathParser.Evaluate(expression);
             Assert.That(result == expectedResult);
         }
 
         [Test]
         public void Parsing_with_priorities()
         {
-            double result = Parser.Evaluate("1 + 2 * 3");
+            double result = MathParser.Evaluate("1 + 2 * 3");
             Assert.That(result == 7);
         }
 
         [Test]
         public void Parenthesis()
         {
-            double result = Parser.Evaluate("( 1 + 2 ) * 3");
+            double result = MathParser.Evaluate("( 1 + 2 ) * 3");
             Assert.That(result == 9);
         }
 
         [Test]
         public void Advanced_parsing()
         {
-            double result = Parser.Evaluate("-4,1 + ( ( ( 5 - 3 ) * 3 ) / 2 ) * 3");
+            double result = MathParser.Evaluate("-4,1 + ( ( ( 5 - 3 ) * 3 ) / 2 ) * 3");
             Assert.That(result == 4.9);
         }
     }
