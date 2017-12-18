@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -109,7 +110,7 @@ namespace PC.Spreadsheet
                 }
                 else   // do we need this?...
                 {
-                    cell.value = double.Parse(formula.Replace(".", ","));
+                    cell.value = double.Parse(formula, CultureInfo.InvariantCulture);
                 }
             }
              _cells[x, y] = cell;

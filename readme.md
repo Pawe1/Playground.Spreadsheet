@@ -10,7 +10,6 @@
 
 ## Limitations / assumptions / etc
 
-* system decimal separator have to be `,`
 * *all tokens must be separated by spaces*
 * constant spreadsheet size (256 x 256)
 * cell references can contain only 1 letter

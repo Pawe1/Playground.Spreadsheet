@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using BinaryFunction = System.Func<double, double, double>;  
@@ -101,8 +102,8 @@ namespace PC.Spreadsheet
             {
                 if (IsOperator(token))
                 {
-                    operand2 = double.Parse(stack.Pop());
-                    operand1 = double.Parse(stack.Pop());
+                    operand2 = double.Parse(stack.Pop(), CultureInfo.InvariantCulture);
+                    operand1 = double.Parse(stack.Pop(), CultureInfo.InvariantCulture);
                     double functionResult = functions[token].Item2(operand1, operand2);
                     stack.Push(functionResult.ToString());                    
                 }
@@ -111,7 +112,7 @@ namespace PC.Spreadsheet
                     stack.Push(token);
                 }
             }
-            return double.Parse(stack.Pop());
+            return double.Parse(stack.Pop(), CultureInfo.InvariantCulture);
         }
     }
 }
